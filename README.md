@@ -1,2 +1,3 @@
 # notebooks
-Jupyter notebooks for Data Science practice
+
+Jupyter notebooks for Machine Learning practice.

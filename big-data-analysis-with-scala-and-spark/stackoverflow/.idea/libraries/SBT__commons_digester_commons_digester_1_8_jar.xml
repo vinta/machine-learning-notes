@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: commons-digester:commons-digester:1.8:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.coursier/cache/v1/https/repo1.maven.org/maven2/commons-digester/commons-digester/1.8/commons-digester-1.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.coursier/cache/v1/https/repo1.maven.org/maven2/commons-digester/commons-digester/1.8/commons-digester-1.8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

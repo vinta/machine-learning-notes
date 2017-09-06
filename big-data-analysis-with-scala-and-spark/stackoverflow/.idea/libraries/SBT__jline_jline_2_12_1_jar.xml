@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="SBT: jline:jline:2.12.1:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.coursier/cache/v1/https/repo1.maven.org/maven2/jline/jline/2.12.1/jline-2.12.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.coursier/cache/v1/https/repo1.maven.org/maven2/jline/jline/2.12.1/jline-2.12.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.coursier/cache/v1/https/repo1.maven.org/maven2/jline/jline/2.12.1/jline-2.12.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

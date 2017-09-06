@@ -1,5 +1,5 @@
+*.dat
 *.py[co]
-
 .ipynb_checkpoints
-
-introduction-to-machine-learning-with-python/cache/
+project/target
+target/

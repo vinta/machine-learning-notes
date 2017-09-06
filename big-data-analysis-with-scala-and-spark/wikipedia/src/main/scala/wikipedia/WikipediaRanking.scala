@@ -1,16 +1,9 @@
 package wikipedia
 
-import org.apache.spark.SparkConf
-import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
+import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.SparkSession
 
 case class WikipediaArticle(title: String, text: String) {
-  /**
-    * @return Whether the text of this article mentions `lang` or not
-    * @param lang Language to look for (e.g. "Scala")
-    */
   def mentionsLanguage(lang: String): Boolean = text.split(' ').contains(lang)
 }
 
@@ -20,11 +13,11 @@ object WikipediaRanking {
     "JavaScript", "Java", "PHP", "Python", "C#", "C++", "Ruby", "CSS",
     "Objective-C", "Perl", "Scala", "Haskell", "MATLAB", "Clojure", "Groovy")
 
-val conf: SparkConf = new SparkConf()
-  .setAppName("WikipediaRanking")
-  .setMaster("local[*]")
+  val conf: SparkConf = new SparkConf()
+    .setAppName("WikipediaRanking")
+    .setMaster("local[*]")
 
-val sc: SparkContext = new SparkContext(conf)
+  val sc: SparkContext = new SparkContext(conf)
 
   // Hint: use a combination of `sc.textFile`, `WikipediaData.filePath` and `WikipediaData.parse`
   val wikiRdd: RDD[WikipediaArticle] = sc.textFile(WikipediaData.filePath).map(WikipediaData.parse)
@@ -87,8 +80,10 @@ val sc: SparkContext = new SparkContext(conf)
    */
   def rankLangsUsingIndex(index: RDD[(String, Iterable[WikipediaArticle])]): List[(String, Int)] = {
     index
-      .map((row: (String, Iterable[WikipediaArticle])) => {
-        (row._1, row._2.size)
+      .map({
+        case (lang, articles) => {
+          (lang, articles.size)
+        }
       })
       .sortBy(-_._2)
       .collect()
@@ -106,12 +101,11 @@ val sc: SparkContext = new SparkContext(conf)
     rdd
       .flatMap((article: WikipediaArticle) => {
         langs
+          .filter((lang: String) => {
+            article.mentionsLanguage(lang)
+          })
           .map((lang: String) => {
-            if (article.mentionsLanguage(lang)) {
-              (lang, 1)
-            } else {
-              (lang, 0)
-            }
+            (lang, 1)
           })
       })
       .reduceByKey((count1: Int, count2: Int) => {
@@ -123,7 +117,6 @@ val sc: SparkContext = new SparkContext(conf)
   }
 
   def main(args: Array[String]) {
-
     /* Languages ranked according to (1) */
     val langsRanked: List[(String, Int)] = timed("Part 1: naive ranking", rankLangs(langs, wikiRdd))
 
@@ -139,9 +132,9 @@ val sc: SparkContext = new SparkContext(conf)
     /* Output the speed of each ranking */
     println(timing)
 
-    // Processing Part 1: naive ranking took 17940 ms.
-    // Processing Part 2: ranking using inverted index took 16797 ms.
-    // Processing Part 3: ranking using reduceByKey took 12311 ms.
+    // Processing Part 1: naive ranking took 16753 ms.
+    // Processing Part 2: ranking using inverted index took 13348 ms.
+    // Processing Part 3: ranking using reduceByKey took 7274 ms.
 
     sc.stop()
   }

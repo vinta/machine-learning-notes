@@ -5,8 +5,8 @@
 Courses:
 
 - [Big Data Analysis with Scala and Spark](https://www.coursera.org/learn/scala-spark-big-data)
-    - Week 1 Programming Assignment: [Wikipedia](big-data-analysis-with-scala-and-spark/wikipedia), score: 10/10
-    - Week 2 Programming Assignment: [StackOverflow](big-data-analysis-with-scala-and-spark/stackoverflow)
+    - Week 1 Programming Assignment: [Wikipedia](big-data-analysis-with-scala-and-spark/week-1/wikipedia), score: 10/10
+    - Week 2 Programming Assignment: [StackOverflow](big-data-analysis-with-scala-and-spark/week-2/stackoverflow), score: 10/10
 
 Books:
 

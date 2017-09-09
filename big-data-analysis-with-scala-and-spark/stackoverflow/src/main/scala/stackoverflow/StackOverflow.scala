@@ -34,11 +34,10 @@ object StackOverflow extends StackOverflow {
 
     val grouped = groupedPostings(raw)
 
-    //val scored  = scoredPostings(grouped)
-    val scored = scoredPostings(grouped).sample(true, 0.2, 0)
+    val scored  = scoredPostings(grouped)
+    //val scored = scoredPostings(grouped).sample(true, 0.2, 0)
 
     val vectors = vectorPostings(scored)
-    vectors.persist()
     //assert(vectors.count() == 2121822, "Incorrect number of vectors: " + vectors.count())
 
     val means   = kmeans(sampleVectors(vectors), vectors, debug = true)
@@ -144,13 +143,19 @@ class StackOverflow extends Serializable {
       }
     }
 
-    scored
+    val vectors = scored
       .filter(_._1.tags.isDefined)
       .map({
         case (question, highScore) => {
           (firstLangInTag(question.tags, langs).get * langSpread, highScore)
         }
       })
+
+    // main() function is not ran by Coursera autograder
+    // you should call cache() in this method
+    // https://www.coursera.org/learn/scala-spark-big-data/programming/FWGnz/stackoverflow-2-week-long-assignment/discussions/threads/Zm0jUAnSEeeQeQo2lD9-LA/replies/8ODbSQ1nEee5JQ48mveh0g
+    vectors.cache()
+    vectors
   }
 
   /** Sample the vectors */
